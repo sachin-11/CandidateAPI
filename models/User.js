@@ -16,10 +16,45 @@ const UserSchema = new mongoose.Schema({
       'Please add a valid email',
     ],
   },
+  title: {
+    type: String,
+    required: [true, 'Please add a Title']
+  },
+  fullName: {
+    type: String,
+    required: [true, 'Please add a Full Name']
+  },
+  country: {
+    type: String,
+    required: [true, 'Please add a Country']
+  },
+  dateOfBirth: {
+     type: Date 
+    },
+    state: {
+      type: String,
+      required: [true, 'Please add a state']
+    },
+    town: {
+      type: String,
+      required: [true, 'Please add a Town']
+    }, 
   role: {
     type: String,
     enum: ['user', 'publisher', 'admin'],
     default: 'user',
+  },
+  mobileNumber: {
+    type: String,
+    required: [true, 'Please add a Phone']
+  },
+  totalExperience: {
+    type: Number,
+    required: [true, 'Please add a Experience']
+  },
+  keySkills: {
+    type: String,
+    required: [true, 'Please add a key Skills']
   },
   password: {
     type: String,

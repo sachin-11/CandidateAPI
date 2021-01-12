@@ -1,23 +1,68 @@
 const ErrorResponse = require('../utils/errorResponse');
 const asyncHandler = require('../middleware/async');
 const User = require('../models/User');
+const { generateToken } = require('../utils/generateToken')
 
 //@desc Register user
 //@route POST /api/v1/auth/register
 //@access public
 
 exports.register = asyncHandler(async (req, res, next) => {
-  const { name, email, password, role } = req.body;
+  const {
+     name,
+     email,
+     password,
+      role,
+      title,
+      fullName,
+      country,
+      state,
+      town,
+      mobileNumber,
+      totalExperience,
+      keySkills
+      } = req.body;
 
   //create user
   const user = await User.create({
     name,
-    email,
-    password,
-    role,
+     email,
+     password,
+      role,
+      title,
+      fullName,
+      country,
+      state,
+      town,
+      mobileNumber,
+      totalExperience,
+      keySkills
   });
 
-  sendTokenResponse(user, 200, res);
+  if(user){
+    res.json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      role:  user.role,
+      title:   user.title,
+      fullName: user.fullName,
+      country: user.country,
+      state: user.state,
+      town: user.town,
+      mobileNumber: user.mobileNumber,
+      totalExperience: user.totalExperience,
+      keySkills: user.keySkills,
+      token: generateToken(user._id)
+
+    })
+  } else {
+    res.status(400).json({
+      success: false,
+      msg: 'Unable to Register'
+    })
+  }
+
 });
 
 //@desc Login user
